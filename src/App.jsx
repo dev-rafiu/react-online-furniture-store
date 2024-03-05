@@ -1,7 +1,6 @@
 import React, { useEffect, useReducer, useState } from "react";
 import { Routes, Route } from "react-router-dom";
 
-import { context } from "./hooks/context";
 import { reducer } from "./hooks/reducer";
 
 // components
@@ -14,15 +13,14 @@ import Cart from "./cart/Cart";
 
 export const AppContext = React.createContext(null);
 
-const initialState = {
+const initialStore = {
   cart: [],
-  isLoading: true,
   total: 0,
 };
 
 function App() {
   const [data, setData] = useState([]);
-  const [state, dispatch] = useReducer(reducer, initialState);
+  const [state, dispatch] = useReducer(reducer, initialStore);
 
   const fetchData = async () => {
     try {
@@ -30,7 +28,6 @@ function App() {
         "https://course-api.com/javascript-store-products"
       );
       const data = await response.json();
-      dispatch({ type: "DATA_FETCHED" });
       data.forEach((item) => {
         item.inCart = false;
         item.count = 1;

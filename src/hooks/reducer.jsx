@@ -1,9 +1,9 @@
 export const reducer = (state, action) => {
   const type = action.type;
 
-  if (type === "DATA_FETCHED") {
-    return { ...state, isLoading: false };
-  }
+  // if (type === "DATA_FETCHED") {
+  //   return { ...state, isLoading: false };
+  // }
 
   if (type === "ADD_TO_CART") {
     const index = state.cart.findIndex((item) => item.id === action.payLoad.id);
