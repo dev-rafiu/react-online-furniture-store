@@ -19,28 +19,7 @@ const initialStore = {
 };
 
 function App() {
-  const [data, setData] = useState([]);
   const [state, dispatch] = useReducer(reducer, initialStore);
-
-  const fetchData = async () => {
-    try {
-      const response = await fetch(
-        "https://course-api.com/javascript-store-products"
-      );
-      const data = await response.json();
-      data.forEach((item) => {
-        item.inCart = false;
-        item.count = 1;
-      });
-      setData(data);
-    } catch (err) {
-      console.log(err);
-    }
-  };
-
-  useEffect(() => {
-    fetchData();
-  }, []);
 
   const addToCart = (product) => {
     dispatch({ type: "ADD_TO_CART", payLoad: product });
@@ -75,7 +54,7 @@ function App() {
     >
       <Navbar />
       <Routes>
-        <Route path="/" element={<Homepage data={data} />} />
+        <Route path="/" element={<Homepage />} />
         <Route path="/cart" element={<Cart />} />
         <Route path="*" element={<PageNotFound />} />
       </Routes>
