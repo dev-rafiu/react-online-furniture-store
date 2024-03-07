@@ -22,8 +22,7 @@ function Product({ item }) {
           <h5 className="product__price">GH¢ {price / 100}</h5>
         </div>
         <button className="add-btn" onClick={setInCart}>
-          <i className="fa-solid fa-cart-shopping"></i>
-          {/* <span> {isClicked ? "In Cart" : "Add To Cart"}</span> */}
+          <i className="fa-solid fa-cart-shopping" />
           Add To Cart
         </button>
       </div>

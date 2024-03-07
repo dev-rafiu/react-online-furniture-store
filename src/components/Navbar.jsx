@@ -15,7 +15,7 @@ function Navbar() {
         <div className="cart-area">
           <Link to="/cart" className="cart-link">
             <span className="sr-only">Cart</span>
-            <i className="fa-solid fa-cart-shopping"></i>
+            <i className="fa-solid fa-cart-shopping" />
           </Link>
           <span className="items-count">{cart.length}</span>
         </div>

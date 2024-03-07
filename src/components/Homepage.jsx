@@ -1,14 +1,16 @@
-import React, { useContext } from "react";
+import React from "react";
 
 import Product from "./Product";
-import { AppContext } from "../App";
 import { useFetchProducts } from "../hooks/api/useFetchProducts";
 
 function Products() {
-  // const { isLoading } = useContext(AppContext);
   const { data, isPending, isError } = useFetchProducts();
   if (isPending) {
-    return <h3>Loading ... </h3>;
+    return (
+      <section className="section-center">
+        <h2>Loading ... </h2>
+      </section>
+    );
   }
 
   if (isError) {

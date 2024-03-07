@@ -68,6 +68,7 @@ function Cart() {
         <button onClick={clearCart} className="clear-btn">
           Clear Cart
         </button>
+
         <Link to="/" className="home-link">
           Back Home
         </Link>

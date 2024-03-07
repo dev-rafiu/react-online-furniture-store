@@ -1,4 +1,4 @@
-import React, { useEffect, useReducer, useState } from "react";
+import React, { useReducer } from "react";
 import { Routes, Route } from "react-router-dom";
 
 import { reducer } from "./hooks/reducer";
