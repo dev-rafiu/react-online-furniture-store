@@ -17,6 +17,8 @@ function Products() {
     return <h3>An error occured</h3>;
   }
 
+  // console.log(data);
+
   return (
     <main>
       <div className="section-center">

@@ -1,15 +1,10 @@
-import React, { useContext } from "react";
-import { AppContext } from "../App";
+import { connect } from "react-redux";
 
-function Product({ item }) {
-  const { addToCart } = useContext(AppContext);
+import { ADD_TO_CART } from "../actions";
 
+function Product({ item, addToCart }) {
   const { image, name, price } = item.fields;
   const URL = image[0].url;
-
-  function setInCart() {
-    addToCart(item);
-  }
 
   return (
     <article className="product">
@@ -21,7 +16,8 @@ function Product({ item }) {
           <p className="product__name">{name}</p>
           <h5 className="product__price">GH¢ {price / 100}</h5>
         </div>
-        <button className="add-btn" onClick={setInCart}>
+
+        <button onClick={() => addToCart()} className="add-btn">
           <i className="fa-solid fa-cart-shopping" />
           Add To Cart
         </button>
@@ -30,4 +26,12 @@ function Product({ item }) {
   );
 }
 
-export default Product;
+function mapDispatchToProps(dispatch, ownProps) {
+  const { item } = ownProps;
+
+  return {
+    addToCart: () => dispatch({ type: ADD_TO_CART, payload: { item } }),
+  };
+}
+
+export default connect(null, mapDispatchToProps)(Product);

@@ -1,10 +1,8 @@
-import React, { useContext } from "react";
 import { Link } from "react-router-dom";
-import { AppContext } from "../App";
 
-function Navbar() {
-  const { cart } = useContext(AppContext);
+import { connect } from "react-redux";
 
+function Navbar({ cart }) {
   return (
     <nav className="navbar">
       <div className="section-center flex">
@@ -24,4 +22,8 @@ function Navbar() {
   );
 }
 
-export default Navbar;
+function mapStateToProps(state) {
+  return { cart: state.cart };
+}
+
+export default connect(mapStateToProps)(Navbar);

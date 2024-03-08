@@ -3,6 +3,9 @@ import { Routes, Route } from "react-router-dom";
 
 import { reducer } from "./hooks/reducer";
 
+import { Provider } from "react-redux";
+import { createStore } from "redux";
+
 // components
 import Homepage from "./components/Homepage";
 import Navbar from "./components/Navbar";
@@ -11,12 +14,13 @@ import Navbar from "./components/Navbar";
 import PageNotFound from "./pages/PageNotFound";
 import Cart from "./cart/Cart";
 
-export const AppContext = React.createContext(null);
-
 const initialStore = {
   cart: [],
-  total: 0,
+  totalPrice: 0,
+  totalCartItems: 0,
 };
+
+export const store = createStore(reducer, initialStore);
 
 function App() {
   const [state, dispatch] = useReducer(reducer, initialStore);
@@ -42,23 +46,14 @@ function App() {
   };
 
   return (
-    <AppContext.Provider
-      value={{
-        ...state,
-        addToCart,
-        increaseCount,
-        decreaseCount,
-        clearCart,
-        removeCartItem,
-      }}
-    >
+    <Provider store={store}>
       <Navbar />
       <Routes>
         <Route path="/" element={<Homepage />} />
         <Route path="/cart" element={<Cart />} />
         <Route path="*" element={<PageNotFound />} />
       </Routes>
-    </AppContext.Provider>
+    </Provider>
   );
 }
 
