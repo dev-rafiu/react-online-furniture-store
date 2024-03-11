@@ -7,9 +7,9 @@ function Products() {
   const { data, isPending, isError } = useFetchProducts();
   if (isPending) {
     return (
-      <section className="section-center">
+      <div className="section-center">
         <h2>Loading ... </h2>
-      </section>
+      </div>
     );
   }
 
@@ -17,14 +17,13 @@ function Products() {
     return <h3>An error occured</h3>;
   }
 
-  // console.log(data);
-
   return (
     <main>
       <div className="section-center">
-        {data?.map((item) => (
-          <Product key={item.id} item={item} />
-        ))}
+        {data?.map((item) => {
+          item.quantity = 1;
+          return <Product key={item.id} item={item} />;
+        })}
       </div>
     </main>
   );

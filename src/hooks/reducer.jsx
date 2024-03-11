@@ -1,9 +1,8 @@
 import {
   ADD_TO_CART,
   CLEAR_CART,
-  DECREASE_COUNT,
+  GET_TOTALS,
   HANDLE_QUANTITY,
-  INCREASE_COUNT,
   REMOVE_FROM_CART,
 } from "../actions";
 
@@ -14,7 +13,6 @@ export const reducer = (state, action) => {
     const { item } = action.payload;
     const index = state.cart.findIndex((cartItem) => cartItem.id === item.id);
     if (index >= 0) return { ...state };
-
     return {
       ...state,
       cart: [...state.cart, item],
@@ -29,32 +27,33 @@ export const reducer = (state, action) => {
   }
 
   if (type === HANDLE_QUANTITY) {
-    console.log("quantity");
-  }
-
-  if (type === INCREASE_COUNT) {
     const newCart = state.cart.map((cartItem) => {
-      if (cartItem.id === action.payLoad) {
-        cartItem = { ...cartItem, count: cartItem.count + 1 };
+      if (cartItem.id === action.payload.id) {
+        if (action.payload.type === "inc") {
+          cartItem = { ...cartItem, quantity: cartItem.quantity + 1 };
+        } else {
+          cartItem = { ...cartItem, quantity: cartItem.quantity - 1 };
+        }
       }
+
       return cartItem;
     });
+
     return { ...state, cart: newCart };
   }
 
-  if (type === DECREASE_COUNT) {
-    const newCart = state.cart
-      .map((cartItem) => {
-        if (cartItem.id === action.payLoad) {
-          cartItem = { ...cartItem, count: cartItem.count - 1 };
-        }
-        return cartItem;
-      })
-      .filter((cartItem) => {
-        return cartItem.count > 0;
-      });
+  if (action.type === GET_TOTALS) {
+    const { totalPrice } = state.cart.reduce(
+      (total, item) => {
+        const { price } = item.fields;
+        total.totalPrice += (price / 100) * item.quantity;
+        return total;
+      },
 
-    return { ...state, cart: newCart };
+      { totalPrice: 0 }
+    );
+
+    return { ...state, totalPrice };
   }
 
   if (type === CLEAR_CART) {

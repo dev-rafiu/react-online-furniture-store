@@ -1,8 +1,9 @@
 import React from "react";
-import { connect } from "react-redux";
-import { REMOVE_FROM_CART } from "../actions";
 
-function CartItem({ item, remove }) {
+import { connect } from "react-redux";
+import { HANDLE_QUANTITY, REMOVE_FROM_CART } from "../actions";
+
+function CartItem({ item, remove, handleQuantity }) {
   return (
     <li className="product flex">
       <div className="product-details flex">
@@ -17,11 +18,21 @@ function CartItem({ item, remove }) {
       </div>
 
       <div className="item-count flex">
-        <button onClick={() => {}} className="increase-count">
+        <button
+          onClick={() => handleQuantity("inc")}
+          className="increase-count"
+        >
           <i className="fa-solid fa-plus"></i>
         </button>
-        <div className="count">{item.count}</div>
-        <button onClick={() => {}} className="decrease-count">
+
+        <div className="count">{item.quantity}</div>
+
+        <button
+          onClick={() =>
+            item.quantity == 1 ? remove() : handleQuantity("dec")
+          }
+          className="decrease-count"
+        >
           <i className="fa-solid fa-minus"></i>
         </button>
       </div>
@@ -34,6 +45,8 @@ function mapDispatchToProps(dispatch, ownProps) {
 
   return {
     remove: () => dispatch({ type: REMOVE_FROM_CART, payload: { id } }),
+    handleQuantity: (type) =>
+      dispatch({ type: HANDLE_QUANTITY, payload: { id, type } }),
   };
 }
 
